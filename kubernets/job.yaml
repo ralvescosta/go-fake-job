@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fake-job
+  labels:
+    app: fake-job
+spec:
+  completions: 1
+  parallelism: 1
+  backoffLimit: 3
+  ttlSecondsAfterFinished: 100
+  template:
+    metadata:
+      labels:
+        app: fake-job
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: fake-job-container
+        image: rafaelbodao/fakejob:latest
+        imagePullPolicy: Always
+        env:
+        - name: SECONDS_TO_SLEEP
+          value: "5"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 65534
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true

@@ -3,6 +3,10 @@
 This container runs a simple application that writes a few log messages to **stdout**, waits for a configurable amount of time, and then exits.  
 You can control **how long it waits** and **whether it exits successfully or with an error** using environment variables.
 
+## Docker Hub Repository
+
+🐳 **Docker Hub**: https://hub.docker.com/repository/docker/rafaelbodao/fakejob
+
 ## Environment Variables
 
 | Variable          | Description                                                                 | Default |

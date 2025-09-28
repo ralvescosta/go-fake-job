@@ -25,6 +25,7 @@ spec:
       labels:
         app: fake-job
     spec:
+      # serviceAccountName: "rafa-service-account"
       restartPolicy: Never
       containers:
       - name: fake-job-container

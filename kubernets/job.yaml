@@ -1,7 +1,18 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: rafa-secret
+  namespace: rafa
+type: Opaque
+data:
+  username: dXNlcm5hbWU=
+  password: cGFzc3dvcmQ=
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: fake-job
+  namespace: rafa
   labels:
     app: fake-job
 spec:
@@ -20,8 +31,18 @@ spec:
         image: rafaelbodao/fakejob:latest
         imagePullPolicy: Always
         env:
-        - name: SECONDS_TO_SLEEP
-          value: "5"
+          - name: SECONDS_TO_SLEEP
+            value: "5"
+          - name: USER_NAME
+            valueFrom:
+              secretKeyRef:
+                name: rafa-secret
+                key: username
+          - name: PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: rafa-secret
+                key: password
         resources:
           requests:
             cpu: 100m

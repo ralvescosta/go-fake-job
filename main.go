@@ -33,5 +33,14 @@ func main() {
 		panic("Exiting with failure as per SHOULD_FAIL=true")
 	}
 
+	if os.Getenv("SHOULD_FAIL_RANDOMLY") == "true" {
+		if time.Now().UnixNano()%2 == 0 {
+			// Simple pseudo-random check using current time's nanoseconds (no extra import needed)
+			logger.Error("Panicking as per SHOULD_FAIL_RANDOMLY=true (randomly chosen)")
+			panic("Exiting with random failure as per SHOULD_FAIL_RANDOMLY=true")
+		}
+		logger.Info("Random check passed; not panicking.")
+	}
+
 	logger.Info("Executed successfully.")
 }
